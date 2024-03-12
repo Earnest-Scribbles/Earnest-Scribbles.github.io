@@ -1,0 +1,8 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "display": "theme/earnestScribbles",
+  "compilerOptions": {
+    "types": ["astro/client"],
+    "baseUrl": "."
+  }
+}
