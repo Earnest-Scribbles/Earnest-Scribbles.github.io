@@ -2,6 +2,9 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
+import remarkToc from 'remark-toc';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 /* 
   We are doing some URL mumbo jumbo here to tell Astro what the URL of your website will be.
@@ -30,6 +33,11 @@ if (isBuild) {
 export default defineConfig({
   server: { port: SERVER_PORT },
   site: BASE_URL,
+  markdown: {
+    // Applied to .md and .mdx files
+    remarkPlugins: [[remarkToc, { heading: 'toc', maxDepth: 3 } ], remarkMath],
+    rehypePlugins: [rehypeKatex],
+  },
   integrations: [
     sitemap(),
     tailwind({
