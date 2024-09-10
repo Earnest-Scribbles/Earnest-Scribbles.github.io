@@ -35,7 +35,7 @@ export default defineConfig({
   site: BASE_URL,
   markdown: {
     // Applied to .md and .mdx files
-    remarkPlugins: [[remarkToc, { heading: 'toc', maxDepth: 3 } ], remarkMath],
+    remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
   },
   integrations: [
