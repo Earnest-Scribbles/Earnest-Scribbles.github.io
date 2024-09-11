@@ -2,7 +2,6 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
-import remarkToc from 'remark-toc';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
