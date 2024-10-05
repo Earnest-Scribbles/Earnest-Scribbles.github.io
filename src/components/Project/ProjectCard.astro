@@ -1,0 +1,69 @@
+---
+const { title, description, pubDate, imageUrl, imageAlt, rank } = Astro.props;
+
+const formattedDate = new Date(pubDate).toLocaleDateString("en-us", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+{
+  rank % 2 == 0 ? (
+  <!-- Right side text card -->
+<div class="flex flex-col lg:flex-row items-center lg:items-stretch bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out p-4 border-2 border-black">
+  <!-- Image Section -->
+  <div class="relative w-full lg:w-1/2 h-64 lg:h-auto bg-center bg-cover rounded-lg" style="background-image: url('/paper.jpg');">
+  <!-- Image Inside Pink Border -->
+  <div class="absolute inset-0 flex items-center justify-center">
+    <div class="relative w-5/6 h-5/6 rounded-lg overflow-hidden border-2 border-dashed border-yellow-400">
+      <img class="w-full h-full object-cover" src={imageUrl} alt={imageAlt} />
+    </div>
+  </div>
+    <!-- Date Element -->
+    <div class="absolute top-4 left-6 bg-yellow-200 text-sm font-title text-gray-900 px-2 py-1 border-2 border-dotted border-gray-700 shadow-[4px_4px_0_0_rgba(0,0,0,1)] rotate-[-10deg] z-20">
+      {formattedDate}
+    </div>
+  </div>
+  <!-- Content Section -->
+  <div class="flex flex-col p-6 lg:p-8 w-full lg:w-1/2 text-left bg-yellow-50 relative rounded-lg" style="background-image: url('/ripped_paper.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    <h2 class="text-3xl font-sketch text-teal-600 font-bold mb-4">{title}</h2>
+    <p class="text-gray-700 font-title text-lg leading-relaxed mb-6 border-b-2 border-yellow-400 pb-2 w-3/4">
+      {description}
+    </p>
+    <button class="bg-teal-100 px-4 py-2 border-2 border-dotted border-teal-400 rounded-full font-bold font-title text-teal-900 hover:bg-teal-300 transition-colors duration-200 self-start">
+      🚀 Discover More
+    </button>
+  </div>
+</div>
+  ) : (
+  <!-- Left side text card -->
+<div class="flex flex-col lg:flex-row-reverse items-center lg:items-stretch bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out p-4 border-2 border-black">
+  <!-- Image Section -->
+  <div class="relative w-full lg:w-1/2 h-64 lg:h-auto bg-center bg-cover rounded-lg" style="background-image: url('/paper.jpg');">
+    <!-- Image Inside Pink Border -->
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="relative w-5/6 h-5/6 rounded-lg overflow-hidden border-2 border-dashed border-pink-400">
+        <img class="w-full h-full object-cover" src={imageUrl} alt={imageAlt} />
+      </div>
+    </div>
+    <!-- Date Element -->
+    <div class="absolute top-4 right-6 bg-pink-200 text-sm font-title text-gray-800 px-2 py-1 border-2 border-dotted border-gray-700 shadow-[4px_4px_0_0_rgba(0,0,0,1)] rotate-[10deg] z-20">
+      {formattedDate}
+    </div>
+  </div>
+  <!-- Content Section with Full Image Background -->
+  <div class="flex flex-col p-6 lg:p-8 w-full lg:w-1/2 text-left bg-pink-50 relative rounded-lg" style="background-image: url('/side_math_crop.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    <h2 class="text-3xl font-sketch text-purple-600 font-bold mb-4 transform custom-rotate">{title}</h2>
+    <p class="text-gray-700 font-title text-lg leading-relaxed mb-6 border-b-2 border-pink-400 pb-2 transform custom-rotate w-5/6">
+      {description}
+    </p>
+    <button class="bg-purple-100 px-4 py-2 border-2 border-dotted border-purple-400 rounded-full font-bold font-title text-purple-900 hover:bg-purple-300 transition-colors duration-200 transform custom-rotate mt-4 self-start">
+      ✨ Learn More
+    </button>
+  </div>
+</div>
+  )
+}
+
+

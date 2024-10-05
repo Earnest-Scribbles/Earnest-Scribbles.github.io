@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from 'astro';
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NoteCard from "../../components/Notebook/NoteCard.astro";
+import Pagination from "../../components/Notebook/Pagination.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const noteEntries = (await getCollection('notebooks', ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+  })).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return paginate(noteEntries, { pageSize: 2 } );
+}) satisfies GetStaticPaths;
+
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props;
+---
+
+<BaseLayout pageTitle="Notebook | Earnest Scribbles" pageHeading="Notebook">
+
+  <div class="max-w-7xl mx-auto p-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 justify-items-center">
+
+			{page.data.map((note) => (
+				<NoteCard 
+					title={note.data.title}
+					description={note.data.description}
+          pubDate={note.data.pubDate}
+          slug={note.slug}
+				/>
+			))}
+
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <Pagination
+    length={page.lastPage}
+    currentUrl={page.url.current}
+    currentPage={page.currentPage}
+    firstUrl="/notebook"
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+    lastUrl={`/notebook/${page.lastPage}`}
+  />
+  
+
+  
+</BaseLayout>

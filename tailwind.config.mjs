@@ -11,8 +11,22 @@ export default {
 			},
 			backgroundImage: {
 				'body': "url('/doodle-light.jpg')"
-			}
+			},
+			colors: {
+				'bubble-gum': '#ff77e9',
+				'midnight': '#121063',
+				'beige': '#f5f5dc',
+				'almond': '#eed9c4',
+				'bisque': '#ffe4c4',
+				'tan': '#d2b48c',
+				'rustic-brown': '#855141',
+				'tawny': '#80471c',
+				'tortilla': '#9a7b4f',
+				'beaver': '#9f8170'
+			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		require('@tailwindcss/typography'),
+	],
 }

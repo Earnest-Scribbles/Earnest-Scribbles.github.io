@@ -1,9 +1,15 @@
 ---
-import Nav from "../components/Nav.astro";
 import "../styles/global.css";
-const { pageTitle } = Astro.props;
+import Nav from "../components/Nav.astro";
+import PageHeading from "../components/PageHeading.astro";
+import Footer from "../components/Footer.astro";
+import SquiggleLine from "../components/Squiggle-Line.astro";
+import SquiggleIcon from "../components/Glitch.astro";
+
+const { pageTitle, pageHeading } = Astro.props;
 ---
 
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -12,13 +18,17 @@ const { pageTitle } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
-  <body>
-    <Header />
-    <h1>{pageTitle}</h1>
-    <slot />
+	<body class="bg-white selection:bg-lime-200 bg-body overflow-auto bg-cover bg-no-repeat bg-fixed flex flex-col min-h-screen">
+	 <SquiggleLine />
+		<Nav />
+
+    <main class="flex-grow">
+      <PageHeading title={pageHeading} />
+      <slot />
+    </main>
+
+		<SquiggleIcon />
+    
     <Footer />
-    <script>
-      import "../scripts/menu.js";
-    </script>
-  </body>
+	</body>
 </html>
