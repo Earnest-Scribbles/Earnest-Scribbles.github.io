@@ -11,7 +11,7 @@ export const getStaticPaths = (async ({ paginate }) => {
     return import.meta.env.PROD ? data.draft !== true : true;
   })).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-  return paginate(blogEntries, { pageSize: 2 } );
+  return paginate(blogEntries, { pageSize: 6 } );
 }) satisfies GetStaticPaths;
 
 // All paginated data is passed on the "page" prop
@@ -29,6 +29,7 @@ const { page } = Astro.props;
           pubDate={post.data.pubDate}
 					imageUrl={post.data.image.url}
           imageAlt={post.data.image.alt}
+          slug={post.slug}
 				/>
 			))}
 		</div>
@@ -37,12 +38,11 @@ const { page } = Astro.props;
   <!-- Pagination -->
   <Pagination
     length={page.lastPage}
-    currentUrl={page.url.current}
     currentPage={page.currentPage}
+    lastPage={page.lastPage}
     firstUrl="/blog"
     prevUrl={page.url.prev}
     nextUrl={page.url.next}
-    lastUrl={`/blog/${page.lastPage}`}
   />
 	
 </BaseLayout>

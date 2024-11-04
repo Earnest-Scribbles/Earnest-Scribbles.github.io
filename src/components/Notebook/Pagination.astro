@@ -1,15 +1,15 @@
 ---
-const { length, currentUrl, currentPage, firstUrl, prevUrl, nextUrl, lastUrl } = Astro.props;
+const { length, currentPage, lastPage, firstUrl, prevUrl, nextUrl } = Astro.props;
 const paginationList = Array.from({ length: length }, (_, i) => i + 1);
 ---
 
 <nav class="flex justify-center mt-6">
     <!-- Pagination Wrapper -->
-    <div class="bg-cover bg-center bg-no-repeat border-2 border-solid border-gray-600 p-3 rounded-lg relative" style="background-image: url('/gold-star.jpg');">
+    <div class="bg-cover bg-center bg-no-repeat border-2 border-solid border-gray-600 p-3 rounded-lg relative" style="background-image: url('/notebook/gold-star.jpg');">
       <ul class="flex space-x-4 font-body">
         <!-- Previous Button -->
         {
-            firstUrl == currentUrl ? (
+            currentPage == 1 ? (
             <li class="px-3 py-1 flex bg-gray-400 border-2 border-solid border-gray-400 rounded-full font-bold text-gray-700">
                 <a href={prevUrl}>« Previous</a>
             </li>
@@ -35,7 +35,7 @@ const paginationList = Array.from({ length: length }, (_, i) => i + 1);
         }
         <!-- Next Button -->
         {
-            lastUrl == currentUrl ? (
+            lastPage == currentPage ? (
             <li class="px-3 py-1 flex bg-gray-400 border-2 border-solid border-gray-400 rounded-full font-bold text-gray-700">
             <a href={nextUrl}>Next »</a>
         </li>

@@ -90,4 +90,19 @@
         font-weight: 400;
         src: url(/fonts/SketchBlockBold.woff2) format("woff2");
     }
+    @font-face {
+        font-family: Driving Around;
+        font-weight: 400;
+        src: url(/fonts/DrivingAround.ttf) format("woff2");
+    }
+    @font-face {
+        font-family: Lexo;
+        font-weight: 400;
+        src: url(/fonts/lexo.ttf) format("woff2");
+    }
+    @font-face {
+        font-family: kbz;
+        font-weight: 400;
+        src: url(/fonts/Play\ Chickens.otf) format("woff2");
+    }
 }
