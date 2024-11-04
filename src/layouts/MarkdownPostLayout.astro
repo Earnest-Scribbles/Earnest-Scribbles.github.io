@@ -1,0 +1,110 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { frontmatter, type } = Astro.props;
+
+const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString("en-us", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+  <BaseLayout pageTitle={frontmatter.title} pageHeading={frontmatter.title}>
+    {type === "notebook" ? (
+    <div class="relative bg-white border-4 border-solid border-gray-600 rounded-lg max-w-7xl mx-auto p-8 mt-8 shadow-md transform transition-transform" 
+        style="background-image: url('/common/border_paper.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <article class="font-title text-lg text-gray-800">
+            <!-- Header Section for Title and Metadata -->
+            <header class="mb-6">
+                <p class="text-sm text-gray-500 font-title border-b-2 border-dashed border-gray-400 pb-1 mb-1">
+                    Published on: {formattedDate}
+                </p>
+                <div class="mt-8 relative w-full max-w-3xl mx-auto">
+                    <!-- Image with dashed border -->
+                    <img 
+                        src={frontmatter.image.url} 
+                        alt={frontmatter.image.alt} 
+                        class="border-2 border-dashed border-gray-400 rounded-lg shadow-lg shadow-gray-300 w-full"
+                    />
+
+                    <!-- Tape - Top Left Corner of Image -->
+                    <div class="absolute top-0 left-0 w-28 h-6 bg-gradient-to-t from-[hsla(51,11%,62%,.63)] to-[hsla(51,13%,70%,.4)] rotate-[-24deg] transform -translate-x-4 translate-y-2 shadow-md"></div>
+
+                    <!-- Tape - Top Right Corner of Image -->
+                    <div class="absolute top-0 right-0 w-28 h-6 bg-gradient-to-t from-[hsla(51,11%,62%,.63)] to-[hsla(51,13%,70%,.4)] rotate-[24deg] transform translate-x-4 translate-y-2 shadow-md"></div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <slot />
+        </article>
+    </div>
+    ) : type === "projects" ? (
+    <div class="relative bg-white p-4 border-2 border-solid border-black rounded-lg max-w-7xl mx-auto mt-8 shadow-md transform transition-transform">
+      <!-- Creative Date Element in Hanging Ribbon Style -->
+        <div class="absolute top-[-12px] right-1/2 translate-x-1/2 bg-purple-200 text-sm font-title text-gray-900 px-4 py-1 border-2 border-solid border-gray-700 shadow-[4px_4px_0_0_rgba(0,0,0,1)] z-20 rounded-t-lg">
+          Published on: {formattedDate}
+        </div>
+     {/* Header Section for Title and Metadata */}
+          <header class="mb-1">
+            <div class="mt-4 p-6 lg:p-8 rounded-lg" style="background-image: url('/project/flowers.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+              <img src={frontmatter.image.url} alt={frontmatter.image.alt} class="border-2 border-dashed border-yellow-400 rounded-lg shadow-lg shadow-gray-300 w-full max-w-3xl mx-auto"/>
+            </div>
+            <p class="border-b-2 border-dashed border-red-300 pt-2 mb-2" />
+          </header>
+        <article class="font-title text-lg p-6 lg:p-8 text-gray-800 rounded-lg" style="background-image: url('/project/white_torn.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+          {/* Main Content */}
+          <slot />
+        </article>
+      </div>
+    ) : (
+    <div class="relative bg-white border-2 border-gray-400 rounded-2xl max-w-7xl mx-auto p-8 mt-8 shadow-lg"
+        style="background-image: url('/blog/pastel_purple.jpg'); background-size: cover; background-position: center;">
+        <article class="font-title text-lg text-gray-800">
+            
+            <!-- Date and Header Section for Title -->
+            <header class="mb-6 relative flex justify-center rounded-2xl p-16 shadow-[6px_6px_15px_rgba(0,0,0,0.15)]"
+                    style="background-image: url('/blog/sun.jpg'); background-size: cover; background-position: center;">
+                <!-- Top-Left Tape on Header -->
+                <div class="absolute top-0 left-0 w-24 h-10 -rotate-12 bg-purple-200 transform -translate-x-4 -translate-y-2 shadow-md"></div>
+
+                <!-- Polaroid effect container -->
+                <div class="bg-white border-2 border-black p-5 pb-20 relative w-full max-w-2xl shadow-[10px_10px_20px_rgba(0,0,0,0.25),_0px_0px_10px_rgba(0,0,0,0.1)] transform rotate-[-3deg]">
+                    <!-- Main Image -->
+                    <img 
+                        src={frontmatter.image.url}
+                        alt={frontmatter.image.alt}
+                        class="w-full transition-transform duration-500 ease-in-out transform group-hover:scale-105 rounded-lg"
+                    />
+
+                    <!-- Yellow Tape - Top Left of Polaroid -->
+                    <div class="absolute top-0 -left-4 w-20 h-4 bg-gradient-to-t from-[hsla(51,11%,62%,.63)] to-[hsla(51,13%,70%,.4)] -rotate-45 transform -translate-x-2 translate-y-2 shadow-md"></div>
+
+                    <!-- Yellow Tape - Bottom Right of Polaroid -->
+                    <div class="absolute bottom-0 -right-4 w-20 h-4 bg-gradient-to-t from-[hsla(51,11%,62%,.63)] to-[hsla(51,13%,70%,.4)] -rotate-45 transform translate-x-2 -translate-y-2 shadow-md"></div>
+
+                    <!-- Post-it Note - Positioned at top center of the image -->
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-custom-teal text-white p-4 rounded-[3%_5%_12%_2%] shadow-[inset_0_0_50px_rgba(0,0,0,.15),_inset_-1px_0_1px_0_rgba(0,0,0,.25)] text-sm">
+                        <p>Published on:</p>
+                        <p class="font-bold">{formattedDate}</p>
+                    </div>
+
+                    <!-- Caption area below the image for polaroid style -->
+                    <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center text-gray-700 text-sm font-semibold tracking-wide">
+                        <p>{frontmatter.image.caption}</p>
+                    </div>
+                </div>
+            </header>
+
+            <main class="relative mt-12 p-6 shadow-lg rounded-2xl"
+                  style="background-image: url('/blog/cloud_back.png'); background-size: contain; background-position: center;">
+                <!-- Tape -->
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-200 w-32 h-10 rotate-6 shadow-md"></div>
+
+                <slot />
+            </main>
+
+        </article>
+    </div>
+    )}
+  </BaseLayout>

@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from 'astro';
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/Project/ProjectCard.astro";
+import Pagination from "../../components/Project/Pagination.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const projectEntries = (await getCollection('projects', ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+  })).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return paginate(projectEntries, { pageSize: 4 } );
+}) satisfies GetStaticPaths;
+
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props;
+---
+
+<BaseLayout pageTitle="Projects | Earnest Scribbles" pageHeading="Projects">
+
+  <div class="max-w-7xl mx-auto p-8 grid grid-cols-1 lg:grid-cols-1 gap-8">
+
+    {page.data.map((project, rank) => (
+				<ProjectCard 
+					title={project.data.title}
+					description={project.data.description}
+          pubDate={project.data.pubDate}
+					imageUrl={project.data.image.url}
+          imageAlt={project.data.image.alt}
+          rank={rank}
+          slug={project.slug}
+				/>
+    ))}
+
+  </div>
+
+  <!-- Pagination -->
+  <Pagination
+    length={page.lastPage}
+    currentPage={page.currentPage}
+    lastPage={page.lastPage}
+    firstUrl="/project"
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+  />
+
+</BaseLayout>

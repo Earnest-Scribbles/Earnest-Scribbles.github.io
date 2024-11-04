@@ -1,0 +1,22 @@
+---
+import Prose from '../../components/Prose.astro';
+import { getCollection } from 'astro:content';
+import MarkdownPostLayout from '../../layouts/MarkdownPostLayout.astro';
+
+export async function getStaticPaths() {
+  const noteEntries = await getCollection('notebooks', ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+  });
+  return noteEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+<MarkdownPostLayout frontmatter={entry.data} type="notebook">
+  <Prose type="notebook">
+    <Content />
+  </Prose>
+</MarkdownPostLayout>

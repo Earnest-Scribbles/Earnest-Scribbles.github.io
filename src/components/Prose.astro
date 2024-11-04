@@ -1,0 +1,19 @@
+---
+const { type } = Astro.props;
+---
+{type === "notebook" ? (
+<div
+  class="prose prose-lg prose-img:rounded-xl prose-inline-code:before:hidden prose-inline-code:after:hidden prose-headings:font-topic prose-headings:text-gray-800 prose-headings:underline w-full max-w-none prose-inline-code:bg-almond prose-inline-code:p-1 prose-inline-code:rounded-full prose-pre:bg-transparent prose-code:font-code prose-a:text-cyan-600 hover:prose-a:text-cyan-500 marker:prose-ul:text-gray-500 prose-blockquote:border-l-gray-300">
+  <slot />
+</div>
+) : type === "projects" ? (
+<div
+  class="prose prose-lg prose-img:rounded-xl prose-inline-code:before:hidden prose-inline-code:after:hidden prose-headings:font-heading prose-headings:text-purple-400 prose-headings:underline w-full max-w-none prose-inline-code:bg-pink-200 prose-inline-code:p-1 prose-inline-code:rounded-full prose-pre:bg-transparent prose-code:font-code prose-a:text-cyan-500 hover:prose-a:text-cyan-400 marker:prose-ul:text-emerald-400 prose-blockquote:border-l-pink-300">
+  <slot />
+</div>
+) : (
+<div
+  class="prose prose-lg prose-img:rounded-xl prose-inline-code:before:hidden prose-inline-code:after:hidden prose-headings:font-sketch prose-headings:text-bubble-gum prose-headings:underline w-full max-w-none prose-inline-code:bg-rose-200 prose-inline-code:p-1 prose-inline-code:rounded-full prose-pre:bg-transparent prose-code:font-code prose-a:text-cyan-500 hover:prose-a:text-cyan-400 marker:prose-ul:text-emerald-400 prose-blockquote:border-l-rose-300">
+  <slot />
+</div>
+)}

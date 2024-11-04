@@ -1,0 +1,49 @@
+---
+const { length, currentPage, lastPage, firstUrl, prevUrl, nextUrl } = Astro.props;
+const paginationList = Array.from({ length: length }, (_, i) => i + 1);
+---
+
+<nav class="flex justify-center mt-6">
+    <div class="border-2 border-gray-600 p-4 rounded-lg relative bg-white"  style="background-image: url('/blog/pink_ribbon.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <ul class="flex space-x-4 font-body">
+            {
+                currentPage == 1 ? (
+                <li class="border-2 border-gray-400 rounded-full px-3 py-1 flex items-center justify-center bg-gray-300">
+                    <a href={prevUrl} class="text-gray-700 hover:text-gray-900">Previous</a>
+                </li>
+                ) : (
+                <li class="border-2 border-gray-400 rounded-full px-3 py-1 flex items-center justify-center transition transform hover:scale-110 duration-200 bg-lime-200">
+                    <a href={prevUrl} class="text-gray-700 hover:text-gray-900">Previous</a>
+                </li>
+                )
+            }
+
+            {
+                paginationList.map((num) => (
+                    currentPage == num ? (
+                    <li class="border-solid border-2 border-black rounded-full w-8 h-8 flex items-center justify-center bg-orange-400">
+                      <a class="text-gray-700 hover:text-gray-900">{num}</a>
+                    </li>
+                    ) : (
+                    <li class="border-dashed border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center transition transform hover:scale-110 duration-200 bg-yellow-200">
+                      <a href={`${firstUrl}${num == 1 ? "" : '/'+(num)}`} class="text-gray-700 hover:text-gray-900">{num}</a>
+                    </li>
+                    )
+                ))
+            }
+
+            {
+                lastPage == currentPage ? (
+                <li class="border-2 border-gray-400 rounded-full px-3 py-1 flex items-center justify-center bg-gray-300">
+                <a href={nextUrl} class="text-gray-700 hover:text-gray-900">Next</a>
+            </li>
+                ) : (
+                <li class="border-2 border-gray-400 rounded-full px-3 py-1 flex items-center justify-center transition transform hover:scale-110 duration-200 bg-lime-200">
+                <a href={nextUrl} class="text-gray-700 hover:text-gray-900">Next</a>
+            </li>
+                )
+            }
+        </ul>
+        <div class="absolute inset-0 border-2 border-gray-600 rounded-lg transform -rotate-1 pointer-events-none"></div>
+    </div>
+</nav>

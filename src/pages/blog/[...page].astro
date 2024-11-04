@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from 'astro';
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogCard from "../../components/Blog/BlogCard.astro";
+import Pagination from "../../components/Blog/Pagination.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const blogEntries = (await getCollection('blogs', ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+  })).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return paginate(blogEntries, { pageSize: 6 } );
+}) satisfies GetStaticPaths;
+
+// All paginated data is passed on the "page" prop
+const { page } = Astro.props;
+---
+
+<BaseLayout pageTitle="Blog | Earnest Scribbles" pageHeading="Blog">
+
+	<div class="max-w-7xl mx-auto p-4">
+		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 justify-items-center">
+			{page.data.map((post) => (
+				<BlogCard 
+					title={post.data.title}
+					description={post.data.description}
+          pubDate={post.data.pubDate}
+					imageUrl={post.data.image.url}
+          imageAlt={post.data.image.alt}
+          slug={post.slug}
+				/>
+			))}
+		</div>
+	</div>
+
+  <!-- Pagination -->
+  <Pagination
+    length={page.lastPage}
+    currentPage={page.currentPage}
+    lastPage={page.lastPage}
+    firstUrl="/blog"
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+  />
+	
+</BaseLayout>
