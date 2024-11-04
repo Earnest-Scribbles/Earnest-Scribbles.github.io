@@ -1,3 +1,0 @@
-# Earnest Scribbles
-
-Theme: **earnestScribbles**
