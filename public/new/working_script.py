@@ -1,12 +1,12 @@
 from PIL import Image
 
 # Load the target image
-image = Image.open("./cloud-long.jpg").convert("RGBA")
+image = Image.open("./lightened/lightened_cloud_small.png").convert("RGBA")
 
 # Define the color you want to lighten and the threshold for similarity
-target_color = (169, 181, 181)  # RGB for #a9b5b5
-lighten_factor = 40  # Increase brightness by this factor
-color_threshold = 40  # Adjust to capture colors close to target color
+target_color = (196, 226, 224)  # RGB for #a9b5b5
+lighten_factor = 10  # Increase brightness by this factor
+color_threshold = 10  # Adjust to capture colors close to target color
 
 # Function to check if a color is within the threshold range of the target color
 def is_close_to_target(color, target_color, threshold):
@@ -29,7 +29,7 @@ for y in range(image.height):
             pixels[x, y] = lighten_color(current_color, lighten_factor)
 
 # Save the final image with the lightened effect
-output_path = "./lightened_cloud_long.png"
+output_path = "./lightened/lightened_cloud_small_final.png"
 image.save(output_path)
 
 output_path
