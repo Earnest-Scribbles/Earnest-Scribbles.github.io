@@ -1,11 +1,16 @@
 ---
+import { getImage } from "astro:assets";
+import goldStar from "../../assets/notebook/gold-star.jpg";
+
+const goldStarImage = await getImage({ src: goldStar });
+
 const { length, currentPage, lastPage, firstUrl, prevUrl, nextUrl } = Astro.props;
 const paginationList = Array.from({ length: length }, (_, i) => i + 1);
 ---
 
 <nav class="flex justify-center mt-6">
     <!-- Pagination Wrapper -->
-    <div class="bg-cover bg-center bg-no-repeat border-2 border-solid border-gray-600 p-3 rounded-lg relative" style="background-image: url('/notebook/gold-star.jpg');">
+    <div class="bg-cover bg-center bg-no-repeat border-2 border-solid border-gray-600 p-3 rounded-lg relative" style={`background-image: url('${goldStarImage.src}');`}>
       <ul class="flex space-x-4 font-body">
         <!-- Previous Button -->
         {

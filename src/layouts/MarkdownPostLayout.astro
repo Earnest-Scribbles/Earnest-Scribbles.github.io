@@ -1,7 +1,21 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-const { frontmatter, type } = Astro.props;
+import { getImage } from "astro:assets";
+import borderPaper from "../assets/common/border_paper.jpg";
+import flowers from "../assets/project/flowers.jpg";
+import whiteTorn from "../assets/project/white_torn.png";
+import pastelPurple from "../assets/blog/pastel_purple.jpg";
+import sun from "../assets/blog/sun.jpg";
+import cloudBack from "../assets/blog/cloud_back_new.png";
 
+const borderPaperImage = await getImage({ src: borderPaper });
+const flowerImage = await getImage({ src: flowers });
+const whiteTornImage = await getImage({ src: whiteTorn });
+const pastelPurpleImage = await getImage({ src: pastelPurple });
+const sunImage = await getImage({ src: sun });
+const cloudBackImage = await getImage({ src: cloudBack });
+
+const { frontmatter, type } = Astro.props;
 const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString("en-us", {
   year: "numeric",
   month: "short",
@@ -11,9 +25,9 @@ const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString("en-us", 
 
   <BaseLayout pageTitle={frontmatter.title} pageHeading={frontmatter.title}>
     {type === "notebook" ? (
-    <div class="relative bg-white border-4 border-solid border-gray-600 rounded-lg max-w-7xl mx-auto p-8 mt-8 shadow-md transform transition-transform" 
-        style="background-image: url('/common/border_paper.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-        <article class="font-title text-lg text-gray-800">
+    <div class="relative bg-white border-4 border-solid border-gray-600 rounded-lg max-w-7xl mx-auto p-8 mt-8 shadow-md transform transition-transform bg-cover bg-center bg-no-repeat" 
+        style={`background-image: url('${borderPaperImage.src}');`}>
+        <article class="font-title text-lg text-gray-800 pb-6">
             <!-- Header Section for Title and Metadata -->
             <header class="mb-6">
                 <p class="text-sm text-gray-500 font-title border-b-2 border-dashed border-gray-400 pb-1 mb-1">
@@ -47,24 +61,24 @@ const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString("en-us", 
         </div>
      {/* Header Section for Title and Metadata */}
           <header class="mb-1">
-            <div class="mt-4 p-6 lg:p-8 rounded-lg" style="background-image: url('/project/flowers.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="mt-4 p-6 lg:p-8 rounded-lg bg-cover bg-center bg-no-repeat" style={`background-image: url('${flowerImage.src}');`}>
               <img src={frontmatter.image.url} alt={frontmatter.image.alt} class="border-2 border-dashed border-yellow-400 rounded-lg shadow-lg shadow-gray-300 w-full max-w-3xl mx-auto"/>
             </div>
             <p class="border-b-2 border-dashed border-red-300 pt-2 mb-2" />
           </header>
-        <article class="font-title text-lg p-6 lg:p-8 text-gray-800 rounded-lg" style="background-image: url('/project/white_torn.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <article class="font-title text-lg p-6 lg:p-8 text-gray-800 rounded-lg bg-cover bg-center bg-no-repeat" style={`background-image: url('${whiteTornImage.src}');`}>
           {/* Main Content */}
           <slot />
         </article>
       </div>
     ) : (
-    <div class="relative bg-white border-2 border-gray-400 rounded-2xl max-w-7xl mx-auto p-8 mt-8 shadow-lg"
-        style="background-image: url('/blog/pastel_purple.jpg'); background-size: cover; background-position: center;">
+    <div class="relative bg-white border-2 border-gray-400 rounded-2xl max-w-7xl mx-auto p-8 mt-8 shadow-lg bg-cover bg-center bg-no-repeat"
+        style={`background-image: url('${pastelPurpleImage.src}');`}>
         <article class="font-title text-lg text-gray-800">
             
             <!-- Date and Header Section for Title -->
-            <header class="mb-6 relative flex justify-center rounded-2xl p-16 shadow-[6px_6px_15px_rgba(0,0,0,0.15)]"
-                    style="background-image: url('/blog/sun.jpg'); background-size: cover; background-position: center;">
+            <header class="mb-6 relative flex justify-center rounded-2xl p-16 shadow-[6px_6px_15px_rgba(0,0,0,0.15)] bg-cover bg-center bg-no-repeat"
+                    style={`background-image: url('${sunImage.src}');`}>
                 <!-- Top-Left Tape on Header -->
                 <div class="absolute top-0 left-0 w-24 h-10 -rotate-12 bg-purple-200 transform -translate-x-4 -translate-y-2 shadow-md"></div>
 
@@ -97,7 +111,7 @@ const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString("en-us", 
             </header>
 
             <main class="relative mt-12 p-6 shadow-lg rounded-2xl bg-contain bg-center"
-                  style="background-image: url('/blog/cloud_back_new.png');">
+                  style={`background-image: url('${cloudBackImage.src}');`}>
                 <!-- Tape -->
                 <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-200 w-32 h-10 rotate-6 shadow-md"></div>
 
