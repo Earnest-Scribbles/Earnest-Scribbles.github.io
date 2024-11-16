@@ -5,7 +5,7 @@ export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 		extend: {
-			fontFamily:{
+			fontFamily: {
 				title: ["Love Ya Like A Sister", "sans-serif"],
 				nav: ["Londrina Solid", "sans-serif"],
 				body: ["Marujo", "sans-serif"],
@@ -30,11 +30,30 @@ export default {
 				'beaver': '#9f8170',
 				'custom-teal': '#4c7582',
 			},
+			typography: {
+				DEFAULT: {
+					css: {
+						'.katex': {
+							fontFamily: 'Covered By Your Grace',
+							fontSize: '1.21em',
+							fontStyle: 'normal !important',
+						},
+						'.katex .mathnormal, .katex .amsrm, .katex .mathit, .katex .mathcal': {
+							fontFamily: 'Covered By Your Grace !important',
+							fontStyle: 'normal !important',
+						},
+						// '.mrel': {
+						// 	fontFamily: 'KaTeX_Main',
+						// 	fontStyle: 'normal !important',
+						// },
+					},
+				},
+			},
 		},
 	},
 	plugins: [
 		require('@tailwindcss/typography'),
-        plugin(function ({ addVariant }) {
+		plugin(function ({ addVariant, e }) {
 			addVariant('prose-inline-code', '&.prose :where(:not(pre)>code):not(:where([class~="not-prose"] *))');
 		})
 	],
