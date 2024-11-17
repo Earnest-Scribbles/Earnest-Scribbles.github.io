@@ -12,7 +12,8 @@ export default {
 				sketch: ["Sketch Block", "sans-serif"],
 				code: ["Shadows Into Light", "sans-serif"],
 				topic: ["Lexo", "sans-serif"],
-				heading: ["Driving Around", "sans-serif"]
+				heading: ["Driving Around", "sans-serif"],
+				index: ["Mathematic", "cursive"],
 			},
 			backgroundImage: {
 				'body': "url('/common/doodle-light.jpg')"
@@ -35,7 +36,7 @@ export default {
 					css: {
 						'.katex': {
 							fontFamily: 'Covered By Your Grace',
-							fontSize: '1.21em',
+							fontSize: '1.5em',
 							fontStyle: 'normal !important',
 						},
 						'.katex .mathnormal, .katex .amsrm, .katex .mathit, .katex .mathcal': {

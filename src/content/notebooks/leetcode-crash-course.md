@@ -3,8 +3,8 @@ external: false
 title: "Leetcode - Interview Crash Course"
 description: "Notes from the course Leetcode - Data structures and algorithms"
 image:
-  url: "/notebook/hero/HowToSolveIt.webp"
-  alt: "The Astro logo with the word One."
+  url: "/notebook/hero/DSA.webp"
+  alt: "Flow chart for DSA on a note"
 pubDate: 2024-11-16
 tags: ["notebook", "programming"]
 ---
@@ -18,27 +18,3 @@ tags: ["notebook", "programming"]
 - Computational complexity of an algorithm, Time and Space complexity
 - Time complexity: amount of time the algorithm needs to run relative to its input size
 - Space complexity: amount of memory allocated by the algorithm when run relative to its input size
-
-- Inline expression: $f(x) = x + 1$
-
-- New line + centered expression:
-  $$
-  f(x) = x + 1
-  $$
-
-$f(x) = 2x$
-When $a$ ≠ $0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are
-$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
-This is a test for inline math: $E = mc^2$
-Lift($L$) can be determined by Lift Coefficient ($C_L$) like the following
-equation.
-$$
-L = \frac{1}{2} \rho v^2 S C_L
-$$
-\\[ x = {-b \pm \sqrt{b^2-4ac} \over 2a} \\]
-
-<div class="prose prose-lg prose-katex:bg-slate-950">
-  <p>This is some text.</p>
-  <p class="katex-math">E = mc^2</p>
-  <!-- KaTeX math will be styled with bg-slate-950 -->
-</div>

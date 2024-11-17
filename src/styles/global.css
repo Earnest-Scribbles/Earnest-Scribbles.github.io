@@ -101,4 +101,9 @@
         font-weight: 400;
         src: url(/fonts/lexo.ttf) format("woff2");
     }
+    @font-face {
+        font-family: Mathematic;
+        font-weight: 400;
+        src: url(/fonts/Mathematic.ttf) format("woff2");
+    }
 }
