@@ -145,3 +145,122 @@ We can use this equation to solve Fibonacci or Lucas sequence
 - Technically Arrays cannot be resized but dynamic arrays can and strings are immutable
 - Appeding to the list is [amortized $O(1)$](https://stackoverflow.com/questions/33044883/why-is-the-time-complexity-of-pythons-list-append-method-o1)
 - The easy way to understand this is that once the size is decided for an array, let say 8 elements, then appending those elements will be $O(1)$, any other element after that will trigger reallocation for additional 8 elements, this reallocation will take time: $O(n)$, the distribution of these elements when amortized per element is $O(n) / n = O(1)$
+
+## Arrays and Strings: Two Pointers
+- will have two integers like `i` and `j` or `left` and `right`
+- these represent an index of the array or string
+> **First method**: Start the pointers at the edges of the input. Move them towards each other until they meet
+- Pseudocode for the same:
+```java
+function fn(arr):
+  left = 0
+  right = arr.lenght - 1
+
+  while left < right:
+    // Do some logic here depending on the problem
+    // Do some more logic here to decide on one of the following:
+      // 1. left ++
+      // 2. right --
+      // 3. Both left++ and right--
+```
+If we keep the work inside the `while` loop at $O(1)$, this technique will have a Time Complexity of $O(n)$
+- Example of checking if a string or an array is a palindrome
+```python
+# Time complexity: O(n), Space complexity: O(1)
+def check_if_palindrome(s):
+  left = 0
+  right = len(s) - 1
+
+  while left < right:
+    if s[left] != s[right]:
+      return False
+    
+    left += 1
+    right -= 1
+
+  return True
+```
+- Example of finding a target integer in a sorted array of unique numbers
+```python
+# Time complexity: O(n), Space complexity: O(1)
+def check_for_target(nums, target):
+  left = 0
+  right = len(nums) - 1
+
+  while left < right:
+    curr = nums[left] + nums[right]
+    if curr == target:
+      return True
+
+    if curr > target:
+      right -= 1
+    else:
+      left += 1
+  
+  return False
+```
+- *Flavors*: Having two pointers but starting the pointers at different indices
+> **Second method**: Move along both inputs simultaneously until all elements have been checked
+- Applicable when the problem has two iterables in the input
+- Pseudocode for the same:
+```java
+function fn(arr1, arr2):
+    i = j = 0
+    while i < arr1.length AND j < arr2.length:
+        // Do some logic here depending on the problem
+        // Do some more logic here to decide on one of the following:
+        //     1. i++
+        //     2. j++
+        //     3. Both i++ and j++
+
+    // Step 4: make sure both iterables are exhausted
+    // Note that only one of these loops would run
+    while i < arr1.length:
+        // Do some logic here depending on the problem
+        i++
+
+    while j < arr2.length:
+        // Do some logic here depending on the problem
+        j++
+```
+If we keep the work inside the `while` loop at $O(1)$, this technique will have a Time Complexity of $O(n + m)$ where `n = arr1.length` and `m = arr2.length`
+- Example of combining two sorted arrays which is also sorted
+```python
+# Time complexity: O(n), Space complexity: O(1) [if we don't count the output as extra space, which we usually don't]
+def combine(arr1, arr2):
+  # ans is the answer
+  ans = []
+  i = j = 0
+
+  while i < length(arr1) and j < length(arr2):
+    if arr1[i] < arr2[j]:
+      ans.append(arr1[i])
+      i += 1
+    else:
+      ans.append(arr2[j]):
+      j += 1
+
+  while i < length(arr1):
+    ans.append(arr1[i])
+    i += 1
+
+  while j < length(arr2):
+    ans.append(arr2[j])
+    j += 1
+  
+  return ans
+```
+- Example of finding if a string $s$ is a subsequence of $t$ while maintaining the relative order of the characters
+```python
+# Time complexity: O(n), Space complexity: O(1)
+def issubsequence(s, t):
+  i = j = 0
+
+  while i < length(s) and j < length(t):
+    if s[i] == t[j]:
+      i += 1
+    j += 1
+
+  return i == len(s)
+```
+- *Flavors*: Having only one input array/string and initializing both pointers at the first index and move both of them forward, Three pointers
