@@ -264,3 +264,121 @@ def issubsequence(s, t):
   return i == len(s)
 ```
 - *Flavors*: Having only one input array/string and initializing both pointers at the first index and move both of them forward, Three pointers
+
+## Arrays and Strings: Sliding Window
+- Implemented using two pointers
+- Subarrays/Window: A contagious section of an array. Elements must be adjacent to each other and in the same order as in the original array. Example - `[1, 2, 3, 4]`. The subarrays for this array are - 
+  - `[1]`, `[2]`, `[3]`, `[4]`
+  - `[1, 2]`, `[2, 3]`, `[3, 4]`
+  - `[1, 2, 3]`, `[2, 3, 4]`
+  - `[1, 2, 3, 4]`
+- Subarray can be defined by two indices, the start(left bound) and the end(right bound)
+- *When to use sliding window?*
+  1. The problem will define criteria that make a subarray **valid**. There are 2 components that will make a subarray valid - 
+      - **Constraint metric**: Attribute of the subarray. e.g. the sum, the number of unique elements, frequency of a specific element, or any other attribute
+      - **Numeric restriction on the constraint metric**: Constraint metric should follow this for a subarray to be valid
+  2. The problem will ask to find valid subarrays in some way - 
+      - The most common task you will see is finding the best valid subarray. The problem will define what makes a subarray better than another. For example, a problem might ask you to find the longest valid subarray
+      - Another common task is finding the number of valid subarrays  
+- Example: 
+    - Find the longest subarray with a sum less than or equal to k
+    - Find the longest substring that has at most one "0"
+    - Find the number of subarrays that have a product less than k
+- Psuedocode - 
+```java
+function fn(arr):
+    left = 0
+    for (int right = 0; right < arr.length; right++):
+        // Do some logic to "add" element at arr[right] to window
+
+        while WINDOW_IS_INVALID:
+            // Do some logic to "remove" element at arr[left] from window
+            left++
+
+        // Do some logic to update the answer
+```
+- Time complexity: $O(n)$, if the logic in every window is kept to $O(1)$. A sliding window guarantees a maximum of $2n$ window iterations - the right pointer can move $n$ times and the left pointer can move $n$ times
+- Example of finding the length of longest subarray whose sum is equal to or less than `k`
+```python
+# Time complexity: O(n), Space complexity: O(1)
+def find_length(nums, k):
+    # curr is the current sum of the window
+    left = curr = ans = 0
+    for right in range(len(nums)):
+      curr += nums[right]
+      while curr > k:
+        curr -= nums[left]
+        left += 1
+      ans = max(ans, right - left + 1)
+
+    return ans
+```
+- Example of longest substring that contains only `1` from a binary string `s`
+```python
+# Time complexity: O(n), Space complexity: O(1)
+def find_length(s):
+    # curr is the current number of zeros in the window
+    left = curr = ans = 0
+    for right in range(len(s)):
+      if s[right] == "0":
+        curr += 1
+      while(curr > 1):
+        if s[left] == "0":
+          curr -= 1
+        left += 1
+      ans = max(ans, right - left + 1)
+
+    return ans
+```
+- **Number of subarrays**: Example of number of subarrays where the product of all the elements in the subarray is strictly less than `k`
+```python
+# Time complexity: O(n), Space complexity: O(1)
+def numSubarrayProductLessThanK(nums, k):
+  if k <= 1:
+    return 0
+  
+  left = ans = 0
+  curr = 1
+
+  for right in range(len(nums)):
+    curr *= nums[right]
+    while curr >= k:
+      curr //= nums[left]
+      left += 1
+    ans += right - left + 1
+
+  return ans
+```
+- **Fixed window size**: Problems with a fixed length `k` for a window.
+Psudeocode:
+```java
+function fn(arr, k):
+    curr = some data to track the window
+
+    // build the first window
+    for (int i = 0; i < k; i++)
+        Do something with curr or other variables to build first window
+
+    ans = answer variable, probably equal to curr here depending on the problem
+    for (int i = k; i < arr.length; i++)
+        // Add arr[i] to window
+        // Remove arr[i - k] from window
+        // Update ans
+
+    return ans
+```
+- Example of finding the largest sum of a subarray in an array with a fixed length `k`
+```python
+# Time complexity: O(n), Space complexity: O(1)
+def find_best_subarray(nums, k):
+  curr = 0
+  for i in range(k):
+    curr += nums[i]
+
+  ans = 0
+  for i in range(k, len(nums)):
+    curr += nums[i] - nums[i - k]
+    ans = max(ans, curr)
+
+  return ans
+```
