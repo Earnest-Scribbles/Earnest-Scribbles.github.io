@@ -4,7 +4,7 @@ import noteFrame from "../../assets/notebook/noteframe.jpg";
 
 const noteFrameImage = await getImage({ src: noteFrame });
 
-const { title, description, pubDate, slug } = Astro.props;
+const { title, description, pubDate, id } = Astro.props;
 const formattedDate = new Date(pubDate).toLocaleDateString("en-us", {
   year: "numeric",
   month: "short",
@@ -33,7 +33,7 @@ const formattedDate = new Date(pubDate).toLocaleDateString("en-us", {
             {description}
         </p>
         <button class="self-center bg-transparent border-2 border-gray-400 border-dashed px-4 py-2 rounded-full font-bold font-title hover:bg-teal-200 transition-colors">
-          <a href={`/notebook/${slug}/`}>✨ Read Notes ✨</a>
+          <a href={`/notebook/${id}/`}>✨ Read Notes ✨</a>
         </button>
     </div>
 

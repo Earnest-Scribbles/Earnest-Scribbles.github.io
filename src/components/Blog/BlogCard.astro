@@ -4,7 +4,7 @@ import pink from "../../assets/blog/pink.jpg";
 
 const pinkImage = await getImage({ src: pink });
 
-const { title, description, pubDate, imageUrl, imageAlt, slug } = Astro.props;
+const { title, description, pubDate, imageUrl, imageAlt, id } = Astro.props;
 const formattedDate = new Date(pubDate).toLocaleDateString("en-us", {
   year: "numeric",
   month: "short",
@@ -33,7 +33,7 @@ const formattedDate = new Date(pubDate).toLocaleDateString("en-us", {
         {description}
     </p>
     <button class="mt-4 bg-white border-2 border-black px-4 py-2 rounded-full font-bold font-title hover:bg-lime-200 transition-colors">
-        <a href={`/blog/${slug}/`}>✨ Read More</a>
+        <a href={`/blog/${id}/`}>✨ Read More</a>
     </button>
 </div>
 
