@@ -23,14 +23,17 @@ const noteBookCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     pubDate: z.date(),
-    description: z.string(),
+    description: z.string().optional(),
     draft: z.boolean().default(false),
+    chapter: z.number().optional(), // Optional field to identify chapters
+    isIndex: z.boolean().default(false), // Flag to mark the main notebook file
+    notebookTitle: z.string().optional(),
     image: z.object({
       url: z.string(),
-      alt: z.string()
-    }),
-    tags: z.array(z.string())
-  })
+      alt: z.string(),
+    }).optional(),
+    tags: z.array(z.string()).optional(),
+  }),
 });
 
 const projectCollection = defineCollection({

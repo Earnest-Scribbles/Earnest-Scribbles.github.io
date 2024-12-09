@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import MarkdownPostLayout from "../../../layouts/MarkdownPostLayout.astro";
+import Prose from "../../../components/Prose.astro";
+
+export async function getStaticPaths() {
+  const notebookEntries = await getCollection('notebooks', ({ data }) => data.isIndex === true);
+  return notebookEntries.map(entry => ({
+    params: { slug: entry.id },
+  }));
+}
+
+const { slug } = Astro.params;
+
+// Fetch the notebook index and its chapters
+const notebookIndex = await getCollection('notebooks', ({ id, data }) => id === slug && data.isIndex === true);
+const chapters = (await getCollection('notebooks', ({ id, data }) =>
+  id.split('/')[0] === slug && !data.isIndex
+)).sort((a, b) => (a.data.chapter || 0) - (b.data.chapter || 0));
+
+if (!notebookIndex.length) throw new Error(`Notebook "${slug}" not found!`);
+const notebook = notebookIndex[0];
+---
+
+<MarkdownPostLayout frontmatter={notebook.data} type=notebook>
+  <Prose type="notebook">
+    <div class="max-w-7xl mx-auto">
+      <p class="mb-4">{notebook.data.description}</p>
+
+      <ul class="list-disc pl-6">
+        {chapters.map((chapter) => (
+          <li>
+              <a href={`/notebook/${chapter.id}`}>
+              {chapter.data.title}
+              </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Prose>
+</MarkdownPostLayout>

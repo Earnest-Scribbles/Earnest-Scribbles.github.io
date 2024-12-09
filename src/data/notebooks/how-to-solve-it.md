@@ -1,6 +1,6 @@
 ---
 external: false
-title: "How to Solve It Notes"
+title: "How to Solve It"
 description: "Notes from the book - How to Solve It"
 image:
   url: "/notebook/hero/HowToSolveIt.webp"
