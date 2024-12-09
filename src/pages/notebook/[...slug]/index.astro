@@ -22,20 +22,34 @@ if (!notebookIndex.length) throw new Error(`Notebook "${slug}" not found!`);
 const notebook = notebookIndex[0];
 ---
 
-<MarkdownPostLayout frontmatter={notebook.data} type=notebook>
+<MarkdownPostLayout frontmatter={notebook.data} type="notebook">
   <Prose type="notebook">
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto px-4">
       <p class="mb-4">{notebook.data.description}</p>
 
-      <ul class="list-disc pl-6">
-        {chapters.map((chapter) => (
-          <li>
-              <a href={`/notebook/${chapter.id}`}>
-              {chapter.data.title}
-              </a>
-          </li>
-        ))}
-      </ul>
+      <!-- Table for Chapters with Sketchy, Creative Elements, Centered -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border-collapse border-solid border-2 border-gray-400 mx-auto">
+          <thead>
+            <tr class="border-b-2 border-dashed border-gray-400">
+              <th class="py-3 px-6 text-center text-2xl font-bold text-gray-700 border-dashed border-r-2 border-gray-400">Chapter No</th> <!-- Vertical line here -->
+              <th class="py-3 px-6 text-center text-2xl font-bold text-gray-700">Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            {chapters.map((chapter) => (
+              <tr class="border-b border-dashed border-gray-400">
+                <td class="py-3 px-6 text-gray-600 text-center border-dashed border-r-2 border-gray-400">{chapter.data.chapter}</td> <!-- Vertical line here -->
+                <td class="py-3 px-6 text-gray-600 text-center">
+                  <a href={`/notebook/${chapter.id}`} class="text-blue-600 hover:underline font-medium">
+                    {chapter.data.title}
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </Prose>
 </MarkdownPostLayout>
