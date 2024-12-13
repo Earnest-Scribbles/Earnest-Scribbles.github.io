@@ -90,3 +90,28 @@ def find_numbers(nums):
 ```
 
 ## Pattern 2: Counting
+- Counting is referred to tracking the frequency of things in a hash map where keys will map to integers
+- Anytime we need to count something, think about using hash map
+- We can use **Sliding window with a hashmap** where the constraint involves tracking multiple elements
+- Example of finding the length of the longest substring in a string `s` that contains at most `k` distinct characters
+```python
+# Time Complexity: O(n), Space Complexity: O(k) as the algorithm delete elements once the hash map grows beyond k
+from collections import defaultdict
+
+def find_longest_substring(s, k):
+  counts = defaultdict(int)
+  left = ans = 0
+
+  for right in range(len(s)):
+    counts[s[right]] += 1
+
+    while len(counts) > k:
+      counts[s[left]] -= 1
+      if counts[s[left]] == 0:
+        del counts[s[left]]
+      left += 1
+      
+    ans = max(ans, right - left + 1)
+
+  return ans
+``` 
