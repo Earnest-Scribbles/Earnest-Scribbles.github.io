@@ -5,12 +5,11 @@ chapter: 3
 draft: false
 notebookTitle: "Leetcode - Interview Crash Course"
 ---
-## Arrays and Strings
 - Technically Arrays cannot be resized but dynamic arrays can and strings are immutable
 - Appeding to the list is [amortized $O(1)$](https://stackoverflow.com/questions/33044883/why-is-the-time-complexity-of-pythons-list-append-method-o1)
 - The easy way to understand this is that once the size is decided for an array, let say 8 elements, then appending those elements will be $O(1)$, any other element after that will trigger reallocation for additional 8 elements, this reallocation will take time: $O(n)$, the distribution of these elements when amortized per element is $O(n) / n = O(1)$
 
-## Arrays and Strings: Two Pointers
+## Two Pointers
 - will have two integers like `i` and `j` or `left` and `right`
 - these represent an index of the array or string
 > **First method**: Start the pointers at the edges of the input. Move them towards each other until they meet
@@ -129,7 +128,7 @@ def issubsequence(s, t):
 ```
 - *Flavors*: Having only one input array/string and initializing both pointers at the first index and move both of them forward, Three pointers
 
-## Arrays and Strings: Sliding Window
+## Sliding Window
 - Implemented using two pointers
 - Subarrays/Window: A contagious section of an array. Elements must be adjacent to each other and in the same order as in the original array. Example - `[1, 2, 3, 4]`. The subarrays for this array are - 
   - `[1]`, `[2]`, `[3]`, `[4]`
@@ -246,3 +245,81 @@ def find_best_subarray(nums, k):
 
   return ans
 ```
+
+## Prefix Sum
+- allow to find the sum of the array nin $O(1)$
+- form of a preprocessing, store precomputed data before the main logic of an algorithm
+- sum of an subarray from `i` to `j`(inclusive) is `prefix[j] - prefix[i - 1]` or `prefix[j] - prefix[i] + nums[i]`
+- Psuedocode
+```java
+// Given an arr num
+
+prefix = [nums[0]]
+for (int i = 1; i < nums.length; i++):
+  prefix.append(nums[i] + prefix[prefix.length - 1])
+```
+- Great when a problem *involves sum of a subarray*, Costs $O(n)$ to build but allows future subarray queries to be $O(1)$
+- Example of returning an array with boolean values representing the answer of the `queries` where `queries[i] = [x, y]` and an integer `limit` with the sum of the subarray from `x` to `y` is less than the `limit`
+```python
+# Time complexity: O(n + m), Space complexity: O(n)
+def answer_queries(nums, queries, limit):
+  prefix = [nums[0]]
+
+  for i in range(1, len(nums)):
+    prefix.append(nums[i] + prefix[-1])
+
+  ans = []
+  for x, y in queries:
+    curr = prefix[y] - prefix[x] + nums[x]
+    ans.append(curr < limit)
+  
+  return ans
+```
+- Example of number of ways to split an array `nums` into two parts such that the first section has a sum greater than or equal to the second section
+```python
+# Time complexity: O(n), Space complexity: O(n)
+def waysToSplitArray(self, nums: List[int]) -> int:
+  n = len(nums)
+
+  prefix = [nums[0]]
+  for i in range(1, n):
+    prefix.append(nums[i] + prefix[-1])
+
+  ans = 0
+  for i in range(n - 1):
+    left_section = prefix[i]
+    right_section = prefix[-1] - prefix[i]
+    if left_section >= right_section:
+      ans += 1
+
+  return ans
+```
+**Optimisation in the above question** - Realise that the prefix array creation is not actually needed as `left_section` itself is storing the prefix sum and `right_section` can be calculated using `total - left_section` as `right_section` always has the section of the array without the `left_section`. This improves the Space complexity to $O(1)$
+```python
+# Time complexity: O(n), Space complexity: O(1)
+def waysToSplitArray(self, nums: List[int]) -> int:
+  ans = left_section = 0
+  total = sum(nums)
+
+  for i in range(len(nums) - 1):
+    left_section += nums[i]
+    right_section = total - left_section
+    if left_section >= right_section:
+      ans += 1
+
+  return ans
+```
+
+## Other Common Patterns
+- $O(n)$ string building
+```python
+def build_string(s):
+    arr = []
+    for c in s:
+        arr.append(c)
+
+    return "".join(arr)
+```
+- Subarrays/Substrings: A contagious section of a string or an array **[Pattern used: Sliding Window or Prefix Sum]**
+- Subsequences: set of elements from the array that keeps same relative order but does not have to be contagious **[Pattern used: Two pointers with two inputs or Dynamic programming]**
+- Subsets: any set of elements from the array where relative order and elements being besides matter, here you can sort the input which you cannot do with subsequence **[Pattern used: Backtracking]**
