@@ -115,3 +115,82 @@ def find_longest_substring(s, k):
 
   return ans
 ``` 
+- Example of returning a sorted array containing all the numbers that appear in all `n` arrays inside a 2D array `nums`
+```python
+# nums has n elements with m elements inside every array
+# Hash map creation and in the worst case, if every element is unique, going through the hash map both will take O(n.m)
+# Sorting will take m.logm, so the time complexity is O(m.(n + logm))
+# Time Complexity: O(m.(n + logm)), Space Complexity: O(n.m)
+from collection import defaultdict
+
+def intersection(self, nums: List[List[int]]) -> List[int]:
+  counts = defaultdict(int)
+  for arr in nums:
+    for x in nums:
+      counts[x] += 1
+
+  n = len(nums)
+  ans = []
+  for key in counts:
+    if count[key] == n:
+      ans.append(key)
+
+  return sorted(ans)
+```
+- Example of determining if all characters have same frequency in a string `s`
+```python
+# Time Complexity: O(n), Space Complexity: O(k)
+from collections import defaultdict
+
+def areOccurrencesEqual(self, s: str) -> bool:
+  counts = defaultdict(int)
+
+  for c in s:
+    counts[c] += 1
+  
+  frequencies = counts.values()   # Get the values in a dictionary and creates an array
+  return len(set(frequencies)) == 1
+```
+One liner using Python collection's `Counter`
+```python
+from collections import defaultdict
+
+def areOccurrencesEqual(self, s: str) -> bool:
+  return len(set(Counter(s).values())) == 1
+```
+### Count the number of subarrays with an "exact" constraint
+- helps to find a solution to the questions 'Find the number of subarrays that have sum exactly equal to `k`'
+- Example of finding the number of subarrays whose sum is equal to `k` from an integer array `nums`
+```python
+# Time Complexity: O(n), Space Complexity: O(n)
+from collections import defaultdict
+
+def subarraySum(self, nums: List[int], k: int) -> int:
+  counts = defaultdict(int)
+  counts[0] = 1
+  ans = curr = 0
+
+  for num in nums:
+    curr += num
+    ans += counts[curr - k]
+    counts[curr] += 1
+
+  return ans
+```
+- Example of couting number of nice subarrays(exactly `k` odd numbers) in an array of positive integers `nums`
+```python
+# Time Complexity: O(n), Space Complexity: O(n)
+from collections import defaultdict
+
+def numberOfSubarrays(self, nums: List[int], k: int) -> int:
+  counts = defaultdict(int)
+  counts[0] = 1
+  ans = curr = 0
+
+  for num in nums:
+    curr += nums % 2
+    ans += counts[curr - k]
+    counts[curr] += 1
+
+  return ans
+```
