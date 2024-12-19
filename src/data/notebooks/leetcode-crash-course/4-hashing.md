@@ -194,3 +194,24 @@ def numberOfSubarrays(self, nums: List[int], k: int) -> int:
 
   return ans
 ```
+- A *little twist* to the above pattern can ask for 'Find the length of longest subarray that have sum exactly equal to `k`'
+- Example of returning the maximum length of a contiguos subarray with an equal number of `0` and `1` given a binary array `nums`
+```python
+from collections import defaultdict
+
+class Solution:
+    def findMaxLength(self, nums: List[int]) -> int:
+      counts = defaultdict(int)
+      counts[0] = -1
+      ans = curr = 0
+
+      for i in range(len(nums)):
+        num = 1 if nums[i] == 1 else -1
+        curr += num
+        if curr in counts:
+          ans = max(ans, i - counts[curr])
+        else:
+          counts[curr] = i
+
+      return ans
+```
