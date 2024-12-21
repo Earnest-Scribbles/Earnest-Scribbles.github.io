@@ -220,14 +220,15 @@ class Solution:
 ## More hashing examples
 - Given an array of strings `strs`, group the anagrams together
 ```python
-# Time Complexity: O(n), Space Complexity: O(n)
+# Time Complexity: O(n.m.logm), Space Complexity: O(n.m)
 from collections import defaultdict
 
 def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
   groups = defaultdict(list)
+  # n: length of strs, m: length of strings, iteration over and sorting costs O(n.m.logm)
   for s in strs:
     key = "".join(sorted(s))
     groups[key].append(s)
 
-  return list(groups.values())
+  return list(groups.values()) # Worst case: O(n) as every key keep a single string value
 ```
