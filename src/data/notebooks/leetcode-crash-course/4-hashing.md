@@ -197,6 +197,7 @@ def numberOfSubarrays(self, nums: List[int], k: int) -> int:
 - A *little twist* to the above pattern can ask for 'Find the length of longest subarray that have sum exactly equal to `k`'
 - Example of returning the maximum length of a contiguos subarray with an equal number of `0` and `1` given a binary array `nums`
 ```python
+# Time Complexity: O(n), Space Complexity: O(n)
 from collections import defaultdict
 
 class Solution:
@@ -214,4 +215,19 @@ class Solution:
           counts[curr] = i
 
       return ans
+```
+
+## More hashing examples
+- Given an array of strings `strs`, group the anagrams together
+```python
+# Time Complexity: O(n), Space Complexity: O(n)
+from collections import defaultdict
+
+def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+  groups = defaultdict(list)
+  for s in strs:
+    key = "".join(sorted(s))
+    groups[key].append(s)
+
+  return list(groups.values())
 ```
