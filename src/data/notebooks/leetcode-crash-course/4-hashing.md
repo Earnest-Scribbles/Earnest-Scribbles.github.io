@@ -232,3 +232,118 @@ def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
 
   return list(groups.values()) # Worst case: O(n) as every key keep a single string value
 ```
+- Given an integer array `cards`, find the length of the shortest subarray that contains at least one duplicate. If the array has no duplicates, return `-1`
+```python
+# Time Complexity: O(n), Space Complexity: O(n)
+from collections import defaultdict
+
+def minimumCardPickup(self, cards: List[int]) -> int:
+  dic = defaultdict(list)
+
+  for i in range(len(cards)):
+    dic[cards[i]].append(i)
+
+  ans = float("inf")
+  for key in dic:
+    arr = dic[key]
+    for i in range(len(arr) - 1):
+        ans = min(ans, arr[i + 1] - arr[i] + 1)
+        
+  return ans if ans < float('inf') else -1
+```
+*Optimisation* realising that we only need the most recent index for each number. This improves the space complexity as the previous one has $O(n)$ space complexity always, but this one will have $O(n)$ space complexity only in the worst case when there are no duplicates
+```python
+# Time Complexity: O(n), Space Complexity: O(n)
+from collections import defaultdict
+
+def minimumCardPickup(self, cards: List[int]) -> int:
+  dic = defaultdict(int)
+  ans = float("inf")
+  for i in range(len(cards)):
+    if cards[i] in dic:
+      ans = min(ans, i - dic[cards[i]] + 1)
+
+    dic[cards[i]] = i
+        
+  return ans if ans < float('inf') else -1
+```
+- Given an array of integers `nums`, find the maximum value of `nums[i] + nums[j]`, where `nums[i]` and `nums[j]` have the same **digit sum** (the sum of their individual digits). Return `-1` if there is no pair of numbers with the same digit sum
+```python
+# Time Complexity: O(n.logn), Space Complexity: O(n)
+from collections import defaultdict
+
+def maximumSum(self, nums: List[int]) -> int:
+  def get_digit_sum(num):
+    digit_sum = 0
+    while num:
+      digit_sum += num % 10
+      num //= 10
+
+    return digit_sum
+
+  dic = defaultdict(list)
+  for num in nums:
+    digit_sum = get_digit_sum(num)
+    dic[digit_sum].append(num)
+
+  ans = -1
+  for key in dic:
+    curr = dic[key]
+    if len(curr) > 1:
+      curr.sort(reverse=True)
+      ans = max(ans, curr[0] + curr[1])
+
+  return ans
+```
+*Optimisation*: Realise we can solve it just by capturing the maximum number under each digit sum, instead of keeping all the elements
+```python
+# Time Complexity: O(n), Space Complexity: O(n)
+from collections import defaultdict
+
+def maximumSum(self, nums: List[int]) -> int:
+  def get_digit_sum(num):
+    digit_sum = 0
+    while num:
+        digit_sum += num % 10
+        num //= 10
+
+    return digit_sum
+
+    dic = defaultdict(int)
+    ans = -1
+    for num in nums:
+      digit_sum = get_digit_sum(num)
+      if digit_sum in dic:
+        ans = max(ans, num + dic[digit_sum])
+      dic[digit_sum] = max(dic[digit_sum], num)
+
+    return ans
+```
+- Given an `n x n` matrix `grid`, return the number of pairs `(R, C)` where `R` is a row and `C` is a column, and `R` and `C` are equal(elements are same and appear in same order) if we consider them as 1D arrays
+```python
+# Time Complexity: O(n^2), Space Complexity: O(n^2)
+from collections import defaultdict
+
+class Solution:
+    def equalPairs(self, grid: List[List[int]]) -> int:
+      def convert_to_key(arr):
+        return tuple(arr)
+
+      dic = defaultdict(int)
+      for row in grid:
+        dic[convert_to_key(row)] += 1
+
+      dic2 = defaultdict(int)
+      for col in range(len(grid[0])):
+        current_col = []
+        for row in range(len(grid)):
+          current_col.append(grid[row][column])
+        
+        dic2[convert_to_key(current_col)] += 1
+
+      ans = 0
+      for arr in dic:
+        ans += dic[arr] * dic2[arr]
+
+      return ans
+```
