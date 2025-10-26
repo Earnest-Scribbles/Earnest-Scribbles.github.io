@@ -251,6 +251,7 @@
     mask-image: none !important;
     font-family: "Mathematic", system-ui !important;
     font-size: 1rem !important;
+    font-weight: 500 !important;
     color: var(--pagefind-ui-text) !important;
     background: transparent !important;
     border: 2px solid transparent !important;
