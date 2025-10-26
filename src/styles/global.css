@@ -107,3 +107,12 @@
         src: url(/fonts/Mathematic.ttf) format("woff2");
     }
 }
+
+/* --- Pagefind search styling --- */
+.pagefind-ui {
+    @apply transition-transform duration-200;
+}
+
+.pagefind-ui__form input {
+    @apply w-32 md:w-36 px-2 py-1 border-none bg-transparent text-sm font-index outline-dashed outline-2;
+}
