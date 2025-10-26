@@ -12,5 +12,26 @@ export default defineConfig({
   },
   integrations: [tailwind({
     applyBaseStyles: false,
-  }), pagefind()],
+  }), pagefind({
+    indexing: {
+      markdown: {
+        excerpt: true,
+        // Use the page's main h1 (PageHeading) so the site logo's h1 doesn't get picked up
+        fields: [
+          {
+            name: "title",
+            selector: "main h1",
+            indexed: true,
+            displayed: true
+          },
+          "description"
+        ]
+      },
+      selectors: {
+        // Prefer the main heading, then article heading, then document <title>
+        "article": "article",
+        "title": ["main h1", "article h1", "title", ".title"]
+      }
+    }
+  })],
 });

@@ -109,10 +109,218 @@
 }
 
 /* --- Pagefind search styling --- */
+:root {
+    --pagefind-ui-scale: 0.8;
+    --pagefind-ui-primary: #393939;
+    --pagefind-ui-text: #393939;
+    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-border: #eeeeee;
+    --pagefind-ui-tag: #eeeeee;
+    --pagefind-ui-border-width: 2px;
+    --pagefind-ui-border-radius: 8px;
+    --pagefind-ui-image-border-radius: 8px;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+}
+
 .pagefind-ui {
-    @apply transition-transform duration-200;
+    position: relative;
+    z-index: 999;
+}
+
+.pagefind-ui__form {
+    position: relative;
+    z-index: 1000;
 }
 
 .pagefind-ui__form input {
-    @apply w-32 md:w-36 px-2 py-1 border-none bg-transparent text-sm font-index outline-dashed outline-2;
+    width: 8rem;
+    border: none;
+    background: transparent;
+    font-size: 0.875rem;
+    font-family: "Mathematic" !important;
+    outline: 2px dashed #000;
+}
+
+@media (min-width: 768px) {
+    .pagefind-ui__form input {
+        width: 9rem;
+    }
+}
+
+/* Results area styling */
+.pagefind-ui__results-area {
+    position: absolute !important;
+    background: white !important;
+    border: 2px solid black !important;
+    border-radius: 8px !important;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2) !important;
+    width: 100% !important;
+    max-height: 400px !important;
+    overflow-y: auto !important;
+    margin-top: 8px !important;
+    padding: 1rem !important;
+    right: 0 !important;
+    top: calc(100% + 0.5rem) !important;
+}
+
+/* Search results styling */
+.pagefind-ui__result {
+    padding: 0.75rem 0.5rem !important;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1) !important;
+}
+
+.pagefind-ui__result:last-child {
+    border-bottom: none !important;
+}
+
+/* Result title and excerpt */
+.pagefind-ui__result-title {
+    font-family: "Driving Around", Lexo, system-ui !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.pagefind-ui__result-excerpt {
+    font-family: "Love Ya Like A Sister", system-ui !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    color: #4b5563 !important;
+}
+
+/* Result link hover effect */
+.pagefind-ui__result-link {
+    display: block !important;
+    text-decoration: none !important;
+    transition: transform 150ms ease-out !important;
+}
+
+.pagefind-ui__result-link:hover {
+    transform: translateX(4px) !important;
+}
+
+/* Load More button styling */
+.pagefind-ui__button {
+    font-family: "Driving Around", system-ui !important;
+    font-size: 1rem !important;
+    background: transparent !important;
+    border: 2px solid #000 !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1.25rem !important;
+    margin-top: 1rem !important;
+    cursor: pointer !important;
+    position: relative !important;
+    transition: all 150ms ease-out !important;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.pagefind-ui__button:hover {
+    transform: translate(2px, 2px) !important;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.pagefind-ui__button:active {
+    transform: translate(3px, 3px) rotate(-1deg) !important;
+    box-shadow: none !important;
+}
+
+.pagefind-ui__button:nth-of-type(2n) {
+    transform: rotate(1deg) !important;
+}
+
+.pagefind-ui__button:nth-of-type(2n):hover {
+    transform: translate(2px, 2px) rotate(1deg) !important;
+}
+
+.pagefind-ui__button:nth-of-type(2n):active {
+    transform: translate(3px, 3px) rotate(1deg) !important;
+}
+
+/* No results message */
+.pagefind-ui__message {
+    font-family: "Love Ya Like A Sister", system-ui !important;
+    color: #4b5563 !important;
+    padding: 0.5rem !important;
+}
+
+/* Clear (x) button inside the search input */
+.pagefind-ui__search-clear {
+    /* Use a text glyph so font-family applies reliably */
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    font-family: "Mathematic", system-ui !important;
+    font-size: 1rem !important;
+    color: var(--pagefind-ui-text) !important;
+    background: transparent !important;
+    border: 2px solid transparent !important;
+    padding: 0 0.75rem !important;
+    height: calc(58px * var(--pagefind-ui-scale)) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    border-radius: var(--pagefind-ui-border-radius) !important;
+    transition: all 120ms ease !important;
+    filter: url("#squiggly-0");
+}
+
+/* Animate squiggle on hover or focus */
+.pagefind-ui__search-clear:hover,
+.pagefind-ui__search-clear:focus {
+    -webkit-animation: squiggles 0.34s linear infinite;
+    animation: squiggles 0.34s linear infinite;
+    border-color: #c80fb5 !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+    color: var(--pagefind-ui-primary) !important;
+    border-style: dashed !important;
+}
+
+.pagefind-ui__search-clear > svg,
+.pagefind-ui__search-clear > img {
+    display: none !important;
+}
+
+.pagefind-ui__search-clear::after {
+    content: "✕";
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1;
+    display: inline-block;
+}
+
+.pagefind-ui__search-clear:hover {
+    border-color: #c80fb5 !important;
+    background: rgba(0,0,0,0.03) !important;
+    color: var(--pagefind-ui-primary) !important;
+    border-style: dashed !important;
+}
+
+.pagefind-ui__search-clear:active {
+    transform: translateY(1px) !important;
+    box-shadow: none !important;
+}
+
+/* Scrollbar styling */
+.pagefind-ui__results-area::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+.pagefind-ui__results-area::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.pagefind-ui__results-area::-webkit-scrollbar-thumb {
+    background: #d1d5db !important;
+    border-radius: 4px !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+    .pagefind-ui__results-area {
+        left: 0 !important;
+        right: 0 !important;
+        width: calc(100% - 1rem) !important;
+        margin: 0.25rem auto 0 !important;
+    }
 }
