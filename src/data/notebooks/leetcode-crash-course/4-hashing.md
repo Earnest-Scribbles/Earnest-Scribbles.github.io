@@ -31,7 +31,7 @@ notebookTitle: "Leetcode - Interview Crash Course"
 ## Pattern 1: Checking for existence
 - Most common application of a hash table is to determine if an element exists in $O(1)$ as array takes $O(n)$ to do this
 - Anytime you find your algorithm running `if ... in ...`, then consider using a hash map or set to store elements to have these operations run in $O(1)$
-- Example of returing indices of two numbers such that they add up to `target` in an array `nums`
+- Example of returning indices of two numbers such that they add up to `target` in an array `nums`
 ```python
 # Time Complexity: O(n), Space Complexity: O(n)
 def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -46,7 +46,7 @@ def twoSum(self, nums: List[int], target: int) -> List[int]:
 
   return [-1, -1]
 ```
-- Example of returing the first character to appear twice from a string `s`
+- Example of returning the first character to appear twice from a string `s`
 
 *Bruteforce solution*
 ```python
